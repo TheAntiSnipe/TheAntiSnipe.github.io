@@ -546,7 +546,8 @@
     new MutationObserver(() => {
       clearTimeout(timer);
       if (!flip.classList.contains('flipped')) {
-        flip.classList.remove('settled');
+        // classList.remove on an absent token still fires the observer, so only touch it when needed.
+        if (flip.classList.contains('settled')) flip.classList.remove('settled');
       } else if (!flip.classList.contains('settled')) {
         timer = setTimeout(() => flip.classList.add('settled'), 500 + clusters.length * 120 + 1000);
       }
